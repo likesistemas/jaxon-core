@@ -87,7 +87,7 @@ abstract class Package implements Code\Contracts\Generator
      *
      * @return string
      */
-    abstract public static function getConfigFile();
+    public static function getConfigFile() {}
 
     /**
      * Include the getReadyScript() in the generated code.
