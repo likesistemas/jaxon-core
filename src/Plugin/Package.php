@@ -52,7 +52,7 @@ abstract class Package implements CodeGeneratorInterface
      *
      * @return string|array
      */
-    abstract public static function config();
+    public static function config() {}
 
     /**
      * Get the value of a given package option
