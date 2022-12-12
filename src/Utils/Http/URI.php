@@ -66,9 +66,9 @@ class URI
         if(isset($_SERVER['HTTP_X_ORIGINAL_URI']) && !empty($_SERVER['HTTP_X_ORIGINAL_URI']))
         {
             $aURL = $this->parseUrl($_SERVER['HTTP_X_ORIGINAL_URI']);
-        } 
-        
-        if(!empty($aURL) && !empty($_SERVER['REQUEST_URI'])) 
+        }
+       
+        if(empty($aURL) && !empty($_SERVER['REQUEST_URI'])) 
         {
             $aURL = $this->parseUrl($_SERVER['REQUEST_URI']);
         }
