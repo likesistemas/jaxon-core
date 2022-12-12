@@ -39,6 +39,21 @@ class URI
         }
     }
 
+    private function parseUrl($uri) {
+        if(empty($uri)) {
+            return [];
+        }
+
+        $uri = str_replace(['"', "'", '<', '>'], ['%22', '%27', '%3C', '%3E'], $uri);
+        $aURL = parse_url($uri);
+        if(!is_array($aURL))
+        {
+            $aURL = [];
+        }
+
+        return $aURL;
+    }
+
     /**
      * Detect the URI of the current request
      *
@@ -48,14 +63,14 @@ class URI
     {
         $aURL = [];
         // Try to get the request URL
-        if(!empty($_SERVER['REQUEST_URI']))
+        if(isset($_SERVER['HTTP_X_ORIGINAL_URI']) && !empty($_SERVER['HTTP_X_ORIGINAL_URI']))
         {
-            $_SERVER['REQUEST_URI'] = str_replace(['"', "'", '<', '>'], ['%22', '%27', '%3C', '%3E'], $_SERVER['REQUEST_URI']);
-            $aURL = parse_url($_SERVER['REQUEST_URI']);
-            if(!is_array($aURL))
-            {
-                $aURL = [];
-            }
+            $aURL = $this->parseUrl($_SERVER['HTTP_X_ORIGINAL_URI']);
+        }
+       
+        if(empty($aURL) && !empty($_SERVER['REQUEST_URI'])) 
+        {
+            $aURL = $this->parseUrl($_SERVER['REQUEST_URI']);
         }
 
         // Fill in the empty values
